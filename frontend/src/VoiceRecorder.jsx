@@ -5,6 +5,7 @@ const VoiceRecorder = () => {
   const [transcript, setTranscript] = useState('');
   const [isSupported, setIsSupported] = useState(true);
   const [response, setResponse] = useState('');
+  const [isProcessing, setIsProcessing] = useState(false);
   const recognitionRef = useRef(null);
 
   // Check if browser supports speech recognition
@@ -26,6 +27,7 @@ const VoiceRecorder = () => {
     recognition.onstart = () => {
       setIsRecording(true);
       setTranscript('');
+      setResponse('');
     };
 
     recognition.onresult = (event) => {
@@ -61,9 +63,15 @@ const VoiceRecorder = () => {
     setIsRecording(false);
   };
 
+  const clearTranscript = () => {
+    setTranscript('');
+    setResponse('');
+  };
+
   const sendToBackend = async () => {
     if (!transcript) return;
 
+    setIsProcessing(true);
     try {
       const response = await fetch('http://localhost:3001/api/parse-symptoms', {
         method: 'POST',
@@ -77,99 +85,110 @@ const VoiceRecorder = () => {
       setResponse(JSON.stringify(data, null, 2));
     } catch (error) {
       console.error('Error sending to backend:', error);
-      setResponse('Error connecting to backend');
+      setResponse('❌ Error connecting to backend. Make sure the server is running on port 3001.');
+    } finally {
+      setIsProcessing(false);
     }
   };
 
   if (!isSupported) {
     return (
-      <div style={{ padding: '20px', textAlign: 'center' }}>
-        <h2>Speech Recognition Not Supported</h2>
-        <p>Your browser doesn't support speech recognition. Please try Chrome or Edge.</p>
+      <div className="container">
+        <div className="not-supported">
+          <h2>🚫 Speech Recognition Not Supported</h2>
+          <p>Your browser doesn't support speech recognition. Please try Chrome, Edge, or Safari.</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div style={{ padding: '20px', maxWidth: '600px', margin: '0 auto' }}>
-      <h1>VoiceVitals - Voice Health Tracker</h1>
-      
-      <div style={{ marginBottom: '20px' }}>
-        <button 
-          onClick={isRecording ? stopRecording : startRecording}
-          style={{
-            padding: '15px 30px',
-            fontSize: '18px',
-            backgroundColor: isRecording ? '#ff4444' : '#4CAF50',
-            color: 'white',
-            border: 'none',
-            borderRadius: '8px',
-            cursor: 'pointer',
-            marginRight: '10px'
-          }}
-        >
-          {isRecording ? '🛑 Stop Recording' : '🎤 Start Recording'}
-        </button>
-        
-        {transcript && (
+    <div className="container">
+      {/* Header */}
+      <div className="header">
+        <h1 className="title">🎤 VoiceVitals</h1>
+        <p className="subtitle">Track your health with voice - simply speak your symptoms and medications</p>
+      </div>
+
+      {/* Voice Controls */}
+      <div className="voice-controls">
+        <div className="recording-area">
           <button 
-            onClick={sendToBackend}
-            style={{
-              padding: '15px 30px',
-              fontSize: '18px',
-              backgroundColor: '#2196F3',
-              color: 'white',
-              border: 'none',
-              borderRadius: '8px',
-              cursor: 'pointer'
-            }}
+            onClick={isRecording ? stopRecording : startRecording}
+            className={`voice-button ${isRecording ? 'recording' : ''}`}
+            disabled={isProcessing}
           >
-            📤 Send to Backend
+            {isRecording ? '🛑' : '🎤'}
+            <div className="button-text">
+              {isRecording ? 'Stop' : 'Start'}
+            </div>
           </button>
+          
+          {isRecording && (
+            <div className="recording-status">
+              <div className="recording-dot"></div>
+              Recording... Speak now!
+            </div>
+          )}
+        </div>
+
+        {/* Action Buttons */}
+        {transcript && (
+          <div className="action-buttons">
+            <button 
+              onClick={sendToBackend}
+              className="action-button send-button"
+              disabled={isProcessing || !transcript}
+            >
+              {isProcessing ? '⏳' : '🚀'} 
+              {isProcessing ? 'Processing...' : 'Analyze with AI'}
+            </button>
+            <button 
+              onClick={clearTranscript}
+              className="action-button clear-button"
+              disabled={isProcessing}
+            >
+              �️ Clear
+            </button>
+          </div>
         )}
       </div>
 
-      {isRecording && (
-        <div style={{ color: '#ff4444', marginBottom: '10px' }}>
-          🔴 Recording... Speak now!
+      {/* Transcript Display */}
+      <div className="transcript-section">
+        <h3 className="section-title">
+          📝 What you said:
+        </h3>
+        <div className="transcript-box">
+          {transcript || (
+            <div className="transcript-placeholder">
+              Your speech will appear here...
+            </div>
+          )}
         </div>
-      )}
+      </div>
 
-      {transcript && (
-        <div style={{ marginBottom: '20px' }}>
-          <h3>What you said:</h3>
-          <div style={{
-            padding: '15px',
-            backgroundColor: '#f5f5f5',
-            borderRadius: '8px',
-            border: '1px solid #ddd'
-          }}>
-            {transcript}
+      {/* Backend Response */}
+      {response && (
+        <div className="response-section">
+          <h3 className="section-title">
+            🤖 AI Analysis:
+          </h3>
+          <div className="response-box">
+            {response}
           </div>
         </div>
       )}
 
-      {response && (
-        <div style={{ marginBottom: '20px' }}>
-          <h3>Backend Response:</h3>
-          <pre style={{
-            padding: '15px',
-            backgroundColor: '#f0f8ff',
-            borderRadius: '8px',
-            border: '1px solid #ddd',
-            overflow: 'auto'
-          }}>
-            {response}
-          </pre>
-        </div>
-      )}
-
-      <div style={{ marginTop: '30px', fontSize: '14px', color: '#666' }}>
-        <p><strong>Instructions:</strong></p>
+      {/* Instructions */}
+      <div className="instructions">
+        <h3>💡 How to use VoiceVitals:</h3>
         <ul>
-          <li>Click "Start Recording" and speak about your symptoms or medications</li>
-          <li>Click "Stop Recording" when finished</li>
-          <li>Click "Send to Backend" to process your speech with AI</li>
+          <li>Click the microphone button to start recording</li>
+          <li>Speak clearly about your symptoms or medications</li>
+          <li>Example: "I have a headache and took 2 aspirin at 3pm"</li>
+          <li>Click "Stop" when finished speaking</li>
+          <li>Click "Analyze with AI" to process your input</li>
         </ul>
       </div>
     </div>
