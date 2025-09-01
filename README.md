@@ -186,43 +186,6 @@ cp .env.example .env
 npm run dev
 ```
 
-## ⚙️ Configuration
-
-### Environment Variables
-
-#### Backend (.env)
-```env
-# Server Configuration
-PORT=4000
-NODE_ENV=development
-
-# Database
-MONGODB_URI=mongodb://localhost:27017/voicevitals
-
-# JWT Authentication
-JWT_SECRET=your-super-secret-jwt-key
-JWT_EXPIRES_IN=7d
-
-# AI Services
-GEMINI_API_KEY=your-gemini-api-key
-
-# CORS
-CORS_ORIGIN=http://localhost:3000
-
-# File Upload
-MAX_FILE_SIZE=10485760
-```
-
-#### Frontend (.env.local)
-```env
-# API Configuration
-NEXT_PUBLIC_API_URL=http://localhost:4000
-
-# Feature Flags
-NEXT_PUBLIC_ENABLE_ANALYTICS=false
-NEXT_PUBLIC_ENABLE_DEBUG=true
-```
-
 ## 📚 API Documentation
 
 ### Authentication Endpoints
