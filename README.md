@@ -1,24 +1,5 @@
 # VoiceVitals - Voice-Powered Health Tracking Platform
 
-## 📋 Table of Contents
-- [Overview](#overview)
-- [Features](#features)
-- [Technology Stack](#technology-stack)
-- [Architecture](#architecture)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [API Documentation](#api-documentation)
-- [Database Schema](#database-schema)
-- [Frontend Components](#frontend-components)
-- [Backend Services](#backend-services)
-- [AI Integration](#ai-integration)
-- [Security Features](#security-features)
-- [Accessibility Features](#accessibility-features)
-- [Testing](#testing)
-- [Deployment](#deployment)
-- [Contributing](#contributing)
-- [License](#license)
-
 ## 🎯 Overview
 
 VoiceVitals is a revolutionary healthcare application that leverages voice recognition and artificial intelligence to make health tracking accessible to everyone. The platform allows users to record their symptoms, medications, and health concerns through natural speech, which is then analyzed by AI to provide personalized health insights and recommendations.
@@ -184,43 +165,6 @@ npm install
 cp .env.example .env
 # Configure environment variables
 npm run dev
-```
-
-## ⚙️ Configuration
-
-### Environment Variables
-
-#### Backend (.env)
-```env
-# Server Configuration
-PORT=4000
-NODE_ENV=development
-
-# Database
-MONGODB_URI=mongodb://localhost:27017/voicevitals
-
-# JWT Authentication
-JWT_SECRET=your-super-secret-jwt-key
-JWT_EXPIRES_IN=7d
-
-# AI Services
-GEMINI_API_KEY=your-gemini-api-key
-
-# CORS
-CORS_ORIGIN=http://localhost:3000
-
-# File Upload
-MAX_FILE_SIZE=10485760
-```
-
-#### Frontend (.env.local)
-```env
-# API Configuration
-NEXT_PUBLIC_API_URL=http://localhost:4000
-
-# Feature Flags
-NEXT_PUBLIC_ENABLE_ANALYTICS=false
-NEXT_PUBLIC_ENABLE_DEBUG=true
 ```
 
 ## 📚 API Documentation
@@ -663,13 +607,6 @@ GEMINI_API_KEY=your-production-gemini-key
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 📞 Support
-
-- **Documentation**: [docs.voicevitals.com](https://docs.voicevitals.com)
-- **Issues**: [GitHub Issues](https://github.com/voicevitals/issues)
-- **Email**: support@voicevitals.com
-- **Discord**: [VoiceVitals Community](https://discord.gg/voicevitals)
 
 ---
 
