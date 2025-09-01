@@ -118,6 +118,7 @@ export interface SpeechRecognitionInstance {
   continuous: boolean
   interimResults: boolean
   lang: string
+  maxAlternatives?: number
   onstart: () => void
   onresult: (event: SpeechRecognitionEvent) => void
   onerror: (event: SpeechRecognitionErrorEvent) => void

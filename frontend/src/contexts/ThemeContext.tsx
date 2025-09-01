@@ -10,7 +10,6 @@ export function ThemeProvider({ children, ...props }: ComponentProps<typeof Next
       defaultTheme="light" 
       enableSystem
       disableTransitionOnChange
-      suppressHydrationWarning
       {...props}
     >
       {children}
