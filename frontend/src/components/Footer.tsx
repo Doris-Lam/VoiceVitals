@@ -5,18 +5,13 @@ import { Mic, Heart } from 'lucide-react'
 import { NavigationLink } from '@/types'
 
 const productLinks: NavigationLink[] = [
-  { label: "Features", href: "#features" },
-  { label: "Voice Recorder", href: "#voice-recorder" },
-  { label: "AI Analysis", href: "#" },
-  { label: "Privacy", href: "#" },
+  { label: "Features", href: "/#features" },
+  { label: "Voice Recorder", href: "/record" },
+  { label: "AI Analysis", href: "/ai-analysis" },
+  { label: "Privacy", href: "/privacy" },
 ]
 
-const resourceLinks: NavigationLink[] = [
-  { label: "Documentation", href: "#" },
-  { label: "API Reference", href: "#" },
-  { label: "Support", href: "#" },
-  { label: "Blog", href: "#" },
-]
+
 
 export function Footer() {
   return (
@@ -76,29 +71,39 @@ export function Footer() {
               </ul>
             </motion.div>
 
-            {/* Resources */}
+            {/* Legal Links */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
               viewport={{ once: true }}
             >
-              <h3 className="text-blue-900 font-semibold text-lg mb-6">Resources</h3>
+              <h3 className="text-blue-900 font-semibold text-lg mb-6">Legal</h3>
               <ul className="space-y-3">
-                {resourceLinks.map((link) => (
-                  <li key={link.label}>
-                    <a
-                      href={link.href}
-                      className="text-blue-700 hover:text-blue-900 transition-colors duration-300 flex items-center group"
-                    >
-                      <span className="group-hover:translate-x-1 transition-transform duration-300">
-                        {link.label}
-                      </span>
-                    </a>
-                  </li>
-                ))}
+                <li>
+                  <a
+                    href="/privacy"
+                    className="text-blue-700 hover:text-blue-900 transition-colors duration-300 flex items-center group"
+                  >
+                    <span className="group-hover:translate-x-1 transition-transform duration-300">
+                      Privacy Policy
+                    </span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/terms"
+                    className="text-blue-700 hover:text-blue-900 transition-colors duration-300 flex items-center group"
+                  >
+                    <span className="group-hover:translate-x-1 transition-transform duration-300">
+                      Terms of Service
+                    </span>
+                  </a>
+                </li>
               </ul>
             </motion.div>
+
+
           </div>
 
 
@@ -119,14 +124,6 @@ export function Footer() {
 
             <div className="flex items-center gap-8 text-sm text-blue-700">
               <span>© 2025 VoiceVitals. All rights reserved.</span>
-              <div className="flex items-center gap-4">
-                <a href="#" className="hover:text-blue-900 transition-colors duration-300">
-                  Privacy Policy
-                </a>
-                <a href="#" className="hover:text-blue-900 transition-colors duration-300">
-                  Terms of Service
-                </a>
-              </div>
             </div>
           </motion.div>
         </div>
