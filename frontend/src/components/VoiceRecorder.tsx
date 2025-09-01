@@ -595,7 +595,7 @@ export function VoiceRecorder() {
               {[
                 "Click the microphone to start recording",
                 "Speak naturally about symptoms or medications",
-                "Example: &ldquo;I have a headache and took 2 aspirin&rdquo;",
+                "Example: \"I have a headache and took 2 aspirin\"",
                 "Our AI will analyze and provide health insights",
               ].map((instruction, index) => (
                 <div key={index} className="flex items-start gap-3">

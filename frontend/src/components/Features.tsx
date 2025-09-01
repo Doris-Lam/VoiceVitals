@@ -44,7 +44,7 @@ const features: Feature[] = [
   {
     icon: Heart,
     title: "Health Trends",
-    description: "Track patterns in your symptoms and medications over time with visual charts",
+    description: "Track patterns in your symptoms and medications over time",
     color: "from-pink-500 to-rose-500",
   },
   {
