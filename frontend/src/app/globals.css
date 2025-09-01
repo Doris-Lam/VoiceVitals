@@ -1,0 +1,189 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-inter: 'Inter', system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-inter);
+  font-feature-settings: 'cv11', 'ss01';
+  font-variation-settings: 'opsz' 32;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Light mode (default) */
+body {
+  @apply bg-slate-50 text-slate-800;
+}
+
+/* Dark mode */
+.dark body {
+  @apply bg-slate-900 text-slate-50;
+}
+
+/* Ensure smooth transitions for theme changes */
+* {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+/* Additional dark mode utilities */
+.dark {
+  color-scheme: dark;
+}
+
+/* Ensure proper contrast in dark mode */
+.dark * {
+  border-color: rgb(51 65 85); /* slate-700 */
+}
+
+/* Fix for any potential hydration issues */
+[data-theme] {
+  transition: none;
+}
+
+/* Ensure proper text colors in dark mode */
+.dark .text-slate-800 {
+  @apply text-slate-100;
+}
+
+.dark .text-slate-700 {
+  @apply text-slate-200;
+}
+
+.dark .text-slate-600 {
+  @apply text-slate-300;
+}
+
+.dark .text-slate-500 {
+  @apply text-slate-400;
+}
+
+/* Ensure proper background colors in dark mode */
+.dark .bg-white {
+  @apply bg-slate-800;
+}
+
+.dark .bg-slate-50 {
+  @apply bg-slate-900;
+}
+
+.dark .bg-slate-100 {
+  @apply bg-slate-800;
+}
+
+.dark .bg-slate-200 {
+  @apply bg-slate-700;
+}
+
+/* Ensure proper border colors in dark mode */
+.dark .border-slate-200 {
+  @apply border-slate-700;
+}
+
+.dark .border-slate-300 {
+  @apply border-slate-600;
+}
+
+.dark .border-slate-400 {
+  @apply border-slate-500;
+}
+
+/* Force light mode on main page - completely unaffected by theme changes */
+.force-light-mode {
+  background: linear-gradient(to bottom right, rgb(248 250 252), rgb(219 234 254), rgb(238 242 255)) !important;
+}
+
+.dark .force-light-mode {
+  background: linear-gradient(to bottom right, rgb(248 250 252), rgb(219 234 254), rgb(238 242 255)) !important;
+}
+
+/* Completely override all dark mode styles for homepage */
+.dark .force-light-mode,
+.dark .force-light-mode *,
+.dark .force-light-mode *::before,
+.dark .force-light-mode *::after {
+  background-color: initial !important;
+  background-image: initial !important;
+  color: initial !important;
+  border-color: initial !important;
+}
+
+/* Force specific light mode styles for homepage */
+.force-light-mode section {
+  background: inherit !important;
+}
+
+.force-light-mode .bg-white {
+  background-color: white !important;
+}
+
+.force-light-mode .text-slate-800 {
+  color: rgb(30 41 59) !important;
+}
+
+.force-light-mode .text-slate-600 {
+  color: rgb(71 85 105) !important;
+}
+
+.force-light-mode .text-slate-700 {
+  color: rgb(51 65 85) !important;
+}
+
+.force-light-mode .text-slate-500 {
+  color: rgb(100 116 139) !important;
+}
+
+.force-light-mode .border-slate-200 {
+  border-color: rgb(226 232 240) !important;
+}
+
+.force-light-mode .border-slate-400 {
+  border-color: rgb(148 163 184) !important;
+}
+
+.force-light-mode .hover\:bg-slate-50:hover {
+  background-color: rgb(248 250 252) !important;
+}
+
+.force-light-mode .bg-slate-50 {
+  background-color: rgb(248 250 252) !important;
+}
+
+.force-light-mode .bg-blue-50 {
+  background-color: rgb(239 246 255) !important;
+}
+
+.force-light-mode .bg-indigo-50 {
+  background-color: rgb(238 242 255) !important;
+}
+
+/* Override any dark mode text color changes */
+.dark .force-light-mode h1,
+.dark .force-light-mode h2,
+.dark .force-light-mode h3,
+.dark .force-light-mode p,
+.dark .force-light-mode span,
+.dark .force-light-mode div {
+  color: inherit !important;
+}
+
+/* Completely disable dark mode for homepage */
+.force-light-mode {
+  color-scheme: light !important;
+}
+
+.dark .force-light-mode {
+  color-scheme: light !important;
+}
+
+/* Force all elements in homepage to ignore dark mode */
+.force-light-mode,
+.force-light-mode * {
+  color-scheme: light !important;
+}

@@ -1,0 +1,54 @@
+{
+  "name": "voicevitals",
+  "version": "1.0.0",
+  "description": "Voice-powered health tracking platform with AI analysis",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build": "npm run build:backend && npm run build:frontend",
+    "build:backend": "cd backend && npm run build",
+    "build:frontend": "cd frontend && npm run build",
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+    "start:backend": "cd backend && npm start",
+    "start:frontend": "cd frontend && npm start",
+    "test": "npm run test:backend && npm run test:frontend",
+    "test:backend": "cd backend && npm test",
+    "test:frontend": "cd frontend && npm test",
+    "lint": "npm run lint:backend && npm run lint:frontend",
+    "lint:backend": "cd backend && npm run lint",
+    "lint:frontend": "cd frontend && npm run lint",
+    "clean": "rm -rf node_modules backend/node_modules frontend/node_modules",
+    "setup": "npm run install:all && echo 'Setup complete! Run npm run dev to start development servers'"
+  },
+  "keywords": [
+    "health",
+    "voice",
+    "ai",
+    "accessibility",
+    "healthcare",
+    "typescript",
+    "nextjs",
+    "nodejs",
+    "mongodb"
+  ],
+  "author": "VoiceVitals Team",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/voicevitals/voicevitals.git"
+  },
+  "bugs": {
+    "url": "https://github.com/voicevitals/voicevitals/issues"
+  },
+  "homepage": "https://voicevitals.com"
+}

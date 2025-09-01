@@ -1,97 +1,676 @@
-# VoiceVitals - Voice-Controlled Health Tracker
+# VoiceVitals - Voice-Powered Health Tracking Platform
 
-A modern web application that combines voice recognition with AI to help users track their health symptoms and medications hands-free.
+## 📋 Table of Contents
+- [Overview](#overview)
+- [Features](#features)
+- [Technology Stack](#technology-stack)
+- [Architecture](#architecture)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [API Documentation](#api-documentation)
+- [Database Schema](#database-schema)
+- [Frontend Components](#frontend-components)
+- [Backend Services](#backend-services)
+- [AI Integration](#ai-integration)
+- [Security Features](#security-features)
+- [Accessibility Features](#accessibility-features)
+- [Testing](#testing)
+- [Deployment](#deployment)
+- [Contributing](#contributing)
+- [License](#license)
 
-## Features
+## 🎯 Overview
 
-- 🎤 Voice recognition for hands-free input
-- 🤖 AI-powered health data parsing (Google Gemini)
-- 📱 Accessible, user-friendly interface
-- 💊 Medication and symptom tracking
-- 🔊 Voice feedback capabilities
+VoiceVitals is a revolutionary healthcare application that leverages voice recognition and artificial intelligence to make health tracking accessible to everyone. The platform allows users to record their symptoms, medications, and health concerns through natural speech, which is then analyzed by AI to provide personalized health insights and recommendations.
 
-## Project Structure
+### Key Benefits
+- **Accessibility First**: Designed for seniors, people with disabilities, and anyone preferring hands-free interaction
+- **Natural Communication**: Speak naturally about symptoms without complex forms
+- **AI-Powered Analysis**: Google Gemini AI provides intelligent health insights
+- **Comprehensive Tracking**: Monitor vitals, medications, symptoms, and water intake
+- **Privacy Protected**: End-to-end encryption and secure data handling
 
+## ✨ Features
+
+### 🎤 Voice Recognition & AI Analysis
+- **Real-time Speech-to-Text**: Powered by Web Speech API for accurate transcript capture
+- **Natural Language Processing**: AI understands context and extracts relevant health information
+- **Symptom Detection**: Automatically identifies symptoms, severity levels, and duration
+- **Medication Recognition**: Detects medications, dosages, and frequencies mentioned
+- **Urgency Assessment**: AI determines risk levels (low, medium, high, critical)
+- **Personalized Recommendations**: Actionable health advice based on symptoms
+
+### 📊 Health Tracking
+- **Vital Signs Monitoring**: Track blood pressure, heart rate, temperature, and weight
+- **Dynamic Color Coding**: Visual indicators based on medical ranges
+  - **Blood Pressure**: Red (≥140/90), Green (<140/90)
+  - **Heart Rate**: Red (>100 BPM), Blue (<60 BPM), Green (60-100 BPM)
+  - **Temperature**: Red (≥38°C), Blue (<35°C), Green (35-37.9°C)
+- **Medication Management**: Track prescriptions, dosages, schedules, and refills
+- **Water Intake Tracking**: Monitor daily hydration with goal setting
+- **Symptom History**: Comprehensive symptom tracking with severity levels
+
+### 📱 User Interface
+- **Responsive Design**: Works seamlessly on desktop, tablet, and mobile
+- **Dark/Light Mode**: Automatic theme switching based on system preferences
+- **Accessibility Features**: High contrast, screen reader support, keyboard navigation
+- **Real-time Updates**: Live transcript display and processing status
+- **Interactive Charts**: Visual health trends and analytics
+
+### 🔐 Security & Privacy
+- **JWT Authentication**: Secure token-based authentication
+- **Password Hashing**: bcrypt encryption for user passwords
+- **Data Encryption**: All sensitive health data is encrypted
+- **Privacy Controls**: User-controlled data sharing options
+- **GDPR Compliance**: Full data portability and deletion capabilities
+
+## 🛠 Technology Stack
+
+### Frontend
+- **Framework**: Next.js 14 with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS with custom design system
+- **Animations**: Framer Motion for smooth transitions
+- **State Management**: React Context API
+- **Icons**: Lucide React
+- **Charts**: Custom chart components with D3.js
+
+### Backend
+- **Runtime**: Node.js
+- **Framework**: Express.js
+- **Database**: MongoDB with Mongoose ODM
+- **Authentication**: JWT with bcrypt
+- **AI Integration**: Google Gemini API
+- **File Processing**: Multer for audio file handling
+- **Validation**: Joi for request validation
+
+### AI & External Services
+- **Speech Recognition**: Web Speech API
+- **AI Analysis**: Google Gemini 1.5 Flash
+- **Audio Processing**: Web Audio API
+- **PDF Generation**: jsPDF for health reports
+
+## 🏗 Architecture
+
+### Frontend Architecture
 ```
-voicevitals/
-├── frontend/          # React app with Vite
-│   ├── src/
-│   │   ├── VoiceRecorder.jsx    # Main voice component
-│   │   └── App.jsx              # Main app component
-│   └── package.json
-└── backend/           # Node.js/Express server
-    ├── server.js      # Main server file
-    ├── .env           # Environment variables
-    └── package.json
+frontend/
+├── src/
+│   ├── app/                    # Next.js App Router pages
+│   │   ├── dashboard/          # Main dashboard interface
+│   │   ├── record/            # Voice recording page
+│   │   ├── records/           # Health records history
+│   │   ├── vitals/            # Vital signs tracking
+│   │   ├── medications/       # Medication management
+│   │   ├── water/             # Water intake tracking
+│   │   ├── settings/          # User preferences
+│   │   └── profile/           # User profile management
+│   ├── components/            # Reusable UI components
+│   ├── contexts/              # React Context providers
+│   ├── hooks/                 # Custom React hooks
+│   ├── types/                 # TypeScript type definitions
+│   └── utils/                 # Utility functions
 ```
 
-## Getting Started
+### Backend Architecture
+```
+backend/
+├── controllers/               # Request handlers
+├── models/                   # MongoDB schemas
+├── routes/                   # API route definitions
+├── services/                 # Business logic
+├── utils/                    # Helper functions
+└── middleware/               # Custom middleware
+```
+
+## 🚀 Installation
 
 ### Prerequisites
-- Node.js (v16 or higher)
-- npm or yarn
-- Modern browser with speech recognition support (Chrome, Edge, Safari)
+- Node.js 18+ 
+- MongoDB 6.0+
+- npm or yarn package manager
 
-### Installation
+### Available Scripts (Root Directory)
+```bash
+# Development
+npm run dev              # Start both frontend and backend in development mode
+npm run dev:frontend     # Start only frontend development server
+npm run dev:backend      # Start only backend development server
 
-1. **Clone and navigate to the project:**
-   ```bash
-   cd voicevitals
-   ```
+# Building
+npm run build            # Build both frontend and backend for production
+npm run build:frontend   # Build only frontend
+npm run build:backend    # Build only backend
 
-2. **Install backend dependencies:**
-   ```bash
-   cd backend
-   npm install
-   ```
+# Production
+npm start                # Start both frontend and backend in production mode
+npm run start:frontend   # Start only frontend production server
+npm run start:backend    # Start only backend production server
 
-3. **Install frontend dependencies:**
-   ```bash
-   cd ../frontend
-   npm install
-   ```
+# Testing
+npm test                 # Run tests for both frontend and backend
+npm run test:frontend    # Run only frontend tests
+npm run test:backend     # Run only backend tests
 
-### Running the Application
+# Utilities
+npm run setup            # Install all dependencies and setup the project
+npm run install:all      # Install dependencies for all packages
+npm run lint             # Run linting for both frontend and backend
+npm run clean            # Remove all node_modules directories
+```
 
-1. **Start the backend server:**
-   ```bash
-   cd backend
-   npm run dev
-   ```
-   The server will run on http://localhost:3001
+### Quick Start (Recommended)
+```bash
+# Install all dependencies and start development servers
+npm run setup
+npm run dev
+```
 
-2. **In a new terminal, start the frontend:**
-   ```bash
-   cd frontend
-   npm run dev
-   ```
-   The app will run on http://localhost:5173
+### Manual Setup
 
-### Usage
+#### Backend Setup
+```bash
+cd backend
+npm install
+cp .env.example .env
+# Configure environment variables
+npm run dev
+```
 
-1. Open http://localhost:5173 in your browser
-2. Click "Start Recording" and speak about your symptoms or medications
-3. Click "Stop Recording" when finished
-4. Click "Send to Backend" to process your speech
+#### Frontend Setup
+```bash
+cd frontend
+npm install
+cp .env.example .env
+# Configure environment variables
+npm run dev
+```
 
-## Next Steps
+## ⚙️ Configuration
 
-- [ ] Integrate Google Gemini AI for intelligent parsing
-- [ ] Add data persistence (database)
-- [ ] Implement user authentication
-- [ ] Add health insights and recommendations
-- [ ] Deploy to production
+### Environment Variables
 
-## Tech Stack
+#### Backend (.env)
+```env
+# Server Configuration
+PORT=4000
+NODE_ENV=development
 
-- **Frontend:** React, Vite, Web Speech API
-- **Backend:** Node.js, Express, CORS
-- **AI:** Google Gemini API (coming soon)
-- **Database:** TBD (SQLite/MongoDB)
+# Database
+MONGODB_URI=mongodb://localhost:27017/voicevitals
 
-## Browser Compatibility
+# JWT Authentication
+JWT_SECRET=your-super-secret-jwt-key
+JWT_EXPIRES_IN=7d
 
-- ✅ Chrome (recommended)
-- ✅ Edge
-- ✅ Safari
-- ❌ Firefox (limited speech recognition support)
+# AI Services
+GEMINI_API_KEY=your-gemini-api-key
+
+# CORS
+CORS_ORIGIN=http://localhost:3000
+
+# File Upload
+MAX_FILE_SIZE=10485760
+```
+
+#### Frontend (.env.local)
+```env
+# API Configuration
+NEXT_PUBLIC_API_URL=http://localhost:4000
+
+# Feature Flags
+NEXT_PUBLIC_ENABLE_ANALYTICS=false
+NEXT_PUBLIC_ENABLE_DEBUG=true
+```
+
+## 📚 API Documentation
+
+### Authentication Endpoints
+
+#### POST /api/auth/register
+Register a new user account
+```json
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "securepassword123"
+}
+```
+
+#### POST /api/auth/login
+Authenticate user and receive JWT token
+```json
+{
+  "email": "john@example.com",
+  "password": "securepassword123"
+}
+```
+
+### Health Records Endpoints
+
+#### POST /api/health
+Create a new health record from voice transcript
+```json
+{
+  "transcript": "I have a headache and took 2 aspirin",
+  "audioUrl": "optional-audio-file-url"
+}
+```
+
+#### GET /api/health
+Retrieve user's health records with pagination
+```
+Query Parameters:
+- page: number (default: 1)
+- limit: number (default: 10)
+- urgencyLevel: string (low|medium|high|urgent)
+```
+
+### Vitals Endpoints
+
+#### POST /api/vitals
+Record vital signs
+```json
+{
+  "bloodPressure": {
+    "systolic": 120,
+    "diastolic": 80
+  },
+  "heartRate": {
+    "bpm": 72
+  },
+  "temperature": {
+    "value": 36.8,
+    "unit": "celsius"
+  },
+  "weight": {
+    "value": 70,
+    "unit": "kg"
+  }
+}
+```
+
+#### GET /api/vitals
+Retrieve vital signs with statistics and trends
+
+#### POST /api/vitals/:id/regenerate-analysis
+Regenerate AI analysis for a specific vitals record
+
+### Medication Endpoints
+
+#### POST /api/medications
+Add a new medication
+```json
+{
+  "name": "Aspirin",
+  "dosage": "100mg",
+  "frequency": "daily",
+  "category": "over-the-counter",
+  "instructions": "Take with food"
+}
+```
+
+#### GET /api/medications
+Retrieve user's medications
+
+#### PUT /api/medications/:id
+Update medication information
+
+#### DELETE /api/medications/:id
+Remove medication from tracking
+
+### Water Tracking Endpoints
+
+#### POST /api/water
+Record water intake
+```json
+{
+  "glasses": 2,
+  "dailyGoal": 8
+}
+```
+
+#### GET /api/water/history
+Retrieve water intake history
+
+#### GET /api/water/stats
+Get water intake statistics
+
+## 🗄️ Database Schema
+
+### User Model
+```javascript
+{
+  _id: ObjectId,
+  name: String,
+  email: String (unique),
+  password: String (hashed),
+  settings: {
+    theme: String,
+    notifications: Boolean,
+    privacyLevel: String
+  },
+  createdAt: Date,
+  updatedAt: Date
+}
+```
+
+### HealthRecord Model
+```javascript
+{
+  _id: ObjectId,
+  user: ObjectId (ref: User),
+  transcript: String,
+  symptoms: [{
+    name: String,
+    severity: Number,
+    duration: String,
+    notes: String
+  }],
+  medications: [{
+    name: String,
+    dosage: String,
+    frequency: String,
+    notes: String
+  }],
+  aiAnalysis: {
+    summary: String,
+    recommendations: [String],
+    urgencyLevel: String,
+    confidence: Number,
+    processedAt: Date
+  },
+  createdAt: Date,
+  updatedAt: Date
+}
+```
+
+### Vitals Model
+```javascript
+{
+  _id: ObjectId,
+  user: ObjectId (ref: User),
+  bloodPressure: {
+    systolic: Number,
+    diastolic: Number,
+    timestamp: Date
+  },
+  heartRate: {
+    bpm: Number,
+    timestamp: Date
+  },
+  temperature: {
+    value: Number,
+    unit: String,
+    timestamp: Date
+  },
+  weight: {
+    value: Number,
+    unit: String,
+    timestamp: Date
+  },
+  aiAnalysis: {
+    summary: String,
+    insights: [String],
+    recommendations: [String],
+    riskLevel: String
+  },
+  createdAt: Date
+}
+```
+
+### Medication Model
+```javascript
+{
+  _id: ObjectId,
+  user: ObjectId (ref: User),
+  name: String,
+  dosage: String,
+  frequency: String,
+  category: String,
+  instructions: String,
+  prescribedBy: String,
+  isActive: Boolean,
+  createdAt: Date,
+  updatedAt: Date
+}
+```
+
+### WaterRecord Model
+```javascript
+{
+  _id: ObjectId,
+  user: ObjectId (ref: User),
+  date: Date,
+  glasses: Number,
+  dailyGoal: Number,
+  percentageComplete: Number,
+  isCompleted: Boolean,
+  createdAt: Date
+}
+```
+
+## 🎨 Frontend Components
+
+### Core Components
+
+#### VoiceRecorder
+- Real-time speech recognition
+- Audio recording and playback
+- Transcript display and editing
+- AI analysis integration
+- Error handling and fallbacks
+
+#### Dashboard
+- Health overview with statistics
+- Recent records display
+- Quick actions and shortcuts
+- Trend visualization
+- Responsive grid layout
+
+#### VitalsTracker
+- Dynamic vital sign cards
+- Color-coded status indicators
+- Historical data visualization
+- AI-powered insights
+
+#### MedicationManager
+- Medication CRUD operations
+- Dosage tracking
+- Refill reminders
+- Category organization
+- Prescription management
+
+### UI Components
+
+#### Navigation
+- Responsive navbar with mobile menu
+- Breadcrumb navigation
+- Tab-based interface
+- Search functionality
+
+#### Forms
+- Accessible form components
+- Real-time validation
+- Error handling
+- Loading states
+
+#### Charts
+- Custom chart components
+- Trend visualization
+- Interactive data points
+- Responsive design
+
+## 🔧 Backend Services
+
+### Authentication Service
+- JWT token generation and validation
+- Password hashing with bcrypt
+- Session management
+- Role-based access control
+
+### AI Analysis Service
+- Google Gemini API integration
+- Natural language processing
+- Symptom extraction
+- Risk assessment
+- Fallback analysis
+
+### Notification Service
+- Email notifications
+- In-app alerts
+- Reminder scheduling
+- Push notifications (future)
+
+## 🤖 AI Integration
+
+### Google Gemini Integration
+- **Model**: Gemini 1.5 Flash
+- **Context Window**: 1M tokens
+- **Response Format**: Structured JSON
+- **Error Handling**: Graceful fallbacks
+- **Rate Limiting**: Intelligent throttling
+
+### Analysis Capabilities
+- **Symptom Recognition**: Identifies 100+ common symptoms
+- **Severity Assessment**: 1-10 scale with medical context
+- **Medication Detection**: Recognizes brand and generic names
+- **Urgency Classification**: Medical risk assessment
+- **Recommendation Generation**: Evidence-based advice
+
+### Fallback System
+- **Offline Analysis**: Basic symptom matching
+- **Medical Guidelines**: Standard health protocols
+- **Error Recovery**: Graceful degradation
+- **User Feedback**: Continuous improvement
+
+## 🔒 Security Features
+
+### Authentication & Authorization
+- **JWT Tokens**: Secure stateless authentication
+- **Password Security**: bcrypt hashing with salt
+- **Session Management**: Automatic token refresh
+- **Access Control**: User-specific data isolation
+
+### Data Protection
+- **Encryption**: AES-256 for sensitive data
+- **HTTPS**: TLS 1.3 encryption in transit
+- **Input Validation**: Comprehensive sanitization
+- **SQL Injection Prevention**: Parameterized queries
+
+### Privacy Compliance
+- **GDPR Compliance**: Full data portability
+- **Data Minimization**: Only necessary data collection
+- **User Consent**: Explicit permission management
+- **Right to Deletion**: Complete data removal
+
+## ♿ Accessibility Features
+
+### Visual Accessibility
+- **High Contrast Mode**: Enhanced visibility
+- **Color Blind Support**: Non-color-dependent indicators
+- **Font Scaling**: Responsive text sizing
+- **Focus Indicators**: Clear navigation feedback
+
+### Auditory Accessibility
+- **Screen Reader Support**: ARIA labels and descriptions
+- **Audio Descriptions**: Contextual audio cues
+- **Volume Controls**: Adjustable audio levels
+- **Transcript Display**: Visual speech feedback
+
+### Motor Accessibility
+- **Keyboard Navigation**: Full keyboard support
+- **Voice Commands**: Hands-free operation
+- **Large Touch Targets**: Mobile-friendly buttons
+- **Gesture Support**: Alternative input methods
+
+### Cognitive Accessibility
+- **Clear Language**: Simple, medical terminology
+- **Consistent Layout**: Predictable interface
+- **Error Prevention**: Validation and confirmation
+- **Help System**: Contextual assistance
+
+## 🧪 Testing
+
+### Frontend Testing
+- **Unit Tests**: Jest with React Testing Library
+- **Integration Tests**: Component interaction testing
+- **E2E Tests**: Cypress for user workflows
+- **Accessibility Tests**: axe-core integration
+
+### Backend Testing
+- **Unit Tests**: Jest for service functions
+- **Integration Tests**: API endpoint testing
+- **Database Tests**: MongoDB integration testing
+- **Security Tests**: Authentication and authorization
+
+### AI Testing
+- **Accuracy Testing**: Symptom recognition validation
+- **Performance Testing**: Response time optimization
+- **Fallback Testing**: Offline functionality verification
+- **User Acceptance**: Real-world scenario testing
+
+## 🚀 Deployment
+
+### Production Environment
+- **Frontend**: Vercel or Netlify
+- **Backend**: AWS EC2 or Google Cloud Run
+- **Database**: MongoDB Atlas
+- **CDN**: Cloudflare for static assets
+
+### Environment Setup
+```bash
+# Production build (from root directory)
+npm run build
+
+# Start production servers
+npm start
+
+# Environment variables
+NODE_ENV=production
+MONGODB_URI=your-production-mongodb-uri
+JWT_SECRET=your-production-jwt-secret
+GEMINI_API_KEY=your-production-gemini-key
+```
+
+### Monitoring & Logging
+- **Application Monitoring**: Sentry for error tracking
+- **Performance Monitoring**: New Relic or DataDog
+- **Log Management**: Winston with structured logging
+- **Health Checks**: Automated system monitoring
+
+## 🤝 Contributing
+
+### Development Setup
+1. Fork the repository
+2. Create a feature branch
+3. Install dependencies
+4. Run tests
+5. Submit a pull request
+
+### Code Standards
+- **TypeScript**: Strict type checking
+- **ESLint**: Code quality enforcement
+- **Prettier**: Consistent formatting
+- **Conventional Commits**: Standardized commit messages
+
+### Testing Requirements
+- **Coverage**: Minimum 80% test coverage
+- **Accessibility**: All components must pass axe-core tests
+- **Performance**: Lighthouse score > 90
+- **Security**: No critical vulnerabilities
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 📞 Support
+
+- **Documentation**: [docs.voicevitals.com](https://docs.voicevitals.com)
+- **Issues**: [GitHub Issues](https://github.com/voicevitals/issues)
+- **Email**: support@voicevitals.com
+- **Discord**: [VoiceVitals Community](https://discord.gg/voicevitals)
+
+---
+
+**VoiceVitals** - Making healthcare accessible through voice technology. 🎤❤️
