@@ -9,7 +9,6 @@ import {
   Heart, 
   Mic, 
   Activity, 
-  Calendar, 
   Settings, 
   LogOut, 
   Plus,
@@ -18,32 +17,15 @@ import {
   Clock,
   User,
   FileText,
-  BarChart3,
   Bell,
   Zap,
-  Shield,
   Target,
-  Brain,
-  Thermometer,
   Pill,
   Stethoscope,
-  MapPin,
-  Phone,
-  Trophy,
-  Award,
   Droplets,
-  MessageSquare,
-  Download,
-  Share2,
-  Filter,
   Search,
   ChevronRight,
-  Sparkles,
-  CheckCircle,
-  Edit,
-  Trash2,
   Eye,
-  EyeOff,
   X
 } from 'lucide-react'
 import { Medication } from '@/types'
@@ -71,7 +53,6 @@ interface HealthRecord {
     processedAt: string
   }
   createdAt: string
-  updatedAt: string
 }
 
 interface VitalsRecord {
@@ -102,7 +83,6 @@ interface VitalsRecord {
     riskLevel: 'low' | 'medium' | 'high' | 'critical'
   }
   createdAt: string
-  updatedAt: string
 }
 
 export default function Dashboard() {
@@ -114,10 +94,6 @@ export default function Dashboard() {
   const [vitals, setVitals] = useState<VitalsRecord[]>([])
   const [stats, setStats] = useState({
     totalRecords: 0,
-    thisWeek: 0,
-    urgentCount: 0,
-    averageSeverity: 0,
-    healthScore: 85,
     streakDays: 0, // Start with 0, not 7
     todayWater: 0,
     waterGoal: 8,
@@ -129,8 +105,6 @@ export default function Dashboard() {
   const [showModal, setShowModal] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [filteredRecords, setFilteredRecords] = useState<HealthRecord[]>([])
-
-  // Quick water logging function - will be defined after fetchTodayWater
 
   const fetchMedications = useCallback(async () => {
     try {
@@ -146,30 +120,20 @@ export default function Dashboard() {
 
       if (response.ok) {
         const data = await response.json()
-        console.log('💊 Medications API response:', data)
         
         // Ensure we have an array of medications
         const medicationsData = Array.isArray(data) ? data : (data.data?.medications || [])
-        console.log('💊 Medications data:', medicationsData)
-        console.log('💊 All medications with isActive property:', medicationsData.map((m: any) => ({ name: m.name, isActive: m.isActive, status: m.status })))
-        console.log('💊 Active medications:', medicationsData.filter((m: any) => m.isActive))
         
         setMedications(medicationsData)
         
         // Recalculate stats when medications are loaded
         const activeCount = medicationsData.filter((m: any) => m.isActive).length
-        console.log('💊 Updating active medications count:', activeCount)
-        console.log('💊 Full medication objects:', medicationsData)
         
         // Force a re-render by updating stats
-        setStats(prev => {
-          const newStats = {
-            ...prev,
-            activeMedications: activeCount
-          }
-          console.log('💊 New stats being set:', newStats)
-          return newStats
-        })
+        setStats(prev => ({
+          ...prev,
+          activeMedications: activeCount
+        }))
       }
     } catch (error) {
       console.error('Error fetching medications:', error)
@@ -206,11 +170,9 @@ export default function Dashboard() {
     try {
       const token = localStorage.getItem('token')
       if (!token) {
-        console.log('No token found for water fetch')
         return
       }
 
-      console.log('Fetching water data...')
       const response = await fetch('http://localhost:4000/api/water/today', {
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -220,12 +182,10 @@ export default function Dashboard() {
 
       if (response.ok) {
         const data = await response.json()
-        console.log('Water API response:', data)
         const waterRecord = data.data.waterRecord
         
         // Get today's water intake in glasses
         const cupsToday = waterRecord.glasses
-        console.log('Setting water to:', cupsToday)
         
         setStats(prev => ({
           ...prev,
@@ -280,84 +240,41 @@ export default function Dashboard() {
     }
   }, [fetchTodayWater])
 
-  const fetchWaterHistory = useCallback(async () => {
-    try {
-      const token = localStorage.getItem('token')
-      if (!token) return
 
-      const response = await fetch('http://localhost:4000/api/water/history?days=7', {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      })
-
-      if (response.ok) {
-        const data = await response.json()
-        setStats(prev => ({
-          ...prev,
-          waterHistory: data.data.history
-        }))
-      }
-    } catch (error) {
-      console.error('Error fetching water history:', error)
-    }
-  }, [])
 
   const fetchHealthRecords = async () => {
     try {
       const token = localStorage.getItem('token')
       if (!token) {
-        console.log('❌ No auth token found')
         return
       }
 
-      console.log('🔍 Fetching health records...')
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'}/api/health`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         }
       })
-
-      console.log('📡 API Response status:', response.status)
       
       if (response.ok) {
         const data = await response.json()
-        console.log('📄 API Response data:', data)
         
         const healthRecords = data.data?.records || data.records || []
-        console.log('🏥 Health records found:', healthRecords.length)
-        console.log('📄 Full API response structure:', Object.keys(data))
-        console.log('📄 Data structure:', data.data ? Object.keys(data.data) : 'No data.data')
-        console.log('📅 Sample record dates:', healthRecords.slice(0, 3).map((r: HealthRecord) => new Date(r.createdAt).toDateString()))
-        console.log('📄 First record sample:', healthRecords[0])
         
         setRecords(healthRecords)
         
         // Calculate real stats from actual data
         const total = healthRecords.length
-        console.log('📊 Total records calculated:', total)
         
         const urgent = healthRecords.filter((r: HealthRecord) => 
           r.aiAnalysis?.urgencyLevel === 'urgent' || r.aiAnalysis?.urgencyLevel === 'high'
-        ).length
-        console.log('🚨 Urgent records:', urgent)
-        
-        // Calculate this week's records
-        const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
-        const thisWeek = healthRecords.filter((r: HealthRecord) => 
-          new Date(r.createdAt) >= oneWeekAgo
         ).length
         
         // Calculate true consecutive day streak
         const calculateStreak = (records: HealthRecord[]) => {
           if (records.length === 0) {
-            console.log('📊 No records found, streak = 0')
             return 0
           }
-          
-          console.log('📊 Calculating streak for', records.length, 'records')
           
           // Get unique dates from records
           const uniqueDates = new Set()
@@ -366,8 +283,6 @@ export default function Dashboard() {
             date.setHours(0, 0, 0, 0)
             uniqueDates.add(date.toDateString())
           })
-          
-          console.log('📊 Unique dates found:', Array.from(uniqueDates))
           
           const today = new Date()
           today.setHours(0, 0, 0, 0)
@@ -380,8 +295,6 @@ export default function Dashboard() {
             const dateString = currentDate.toDateString()
             const hasRecord = uniqueDates.has(dateString)
             
-            console.log(`📊 Checking ${dateString}: ${hasRecord ? '✅' : '❌'}`)
-            
             if (hasRecord) {
               streak++
               currentDate.setDate(currentDate.getDate() - 1)
@@ -390,7 +303,6 @@ export default function Dashboard() {
             }
           }
           
-          console.log('📊 Final streak count:', streak)
           return streak
         }
         
@@ -398,53 +310,8 @@ export default function Dashboard() {
         
 
         
-        // Simple debugging
-        console.log('📊 Final streak result:', {
-          totalRecords: healthRecords.length,
-          streakDays: streakDays,
-          today: new Date().toDateString()
-        })
-        
-        // Calculate average severity
-        const averageSeverity = healthRecords.length > 0 
-          ? healthRecords.reduce((sum: number, r: HealthRecord) => {
-              const recordSeverity = r.symptoms?.reduce((symptomSum: number, symptom) => symptomSum + (symptom.severity || 0), 0) || 0
-              return sum + recordSeverity
-            }, 0) / healthRecords.length 
-          : 0
-
-        // Calculate health score based on various factors
-        const healthScore = Math.min(100, Math.max(0, 
-          (healthRecords.length * 2) + 
-          (thisWeek * 5) + 
-          (Array.isArray(medications) ? medications.filter(m => m.isActive).length * 3 : 0) +
-          (Math.max(0, 10 - urgent) * 5) +
-          (stats.todayWater * 2) // Add water intake to health score
-        ))
-        
-        console.log('🎯 Setting stats with:', {
-          totalRecords: total,
-          thisWeek: thisWeek,
-          urgentCount: urgent,
-          streakDays: streakDays,
-          healthScore: Math.round(healthScore),
-          activeMedications: Array.isArray(medications) ? medications.filter((m: any) => m.isActive).length : 0
-        })
-        
-        console.log('📊 Detailed stats breakdown:', {
-          healthRecordsLength: healthRecords.length,
-          totalCalculated: total,
-          recordsArray: healthRecords.length > 0 ? 'Has records' : 'Empty array',
-          apiDataKeys: Object.keys(data),
-          dataDataKeys: data.data ? Object.keys(data.data) : 'No data.data'
-        })
-        
         setStats(prev => ({
           totalRecords: total,
-          thisWeek: thisWeek,
-          urgentCount: urgent,
-          averageSeverity: Math.round(averageSeverity * 10) / 10,
-          healthScore: Math.round(healthScore),
           streakDays: streakDays,
           todayWater: prev.todayWater, // Preserve existing water data
           waterGoal: prev.waterGoal, // Preserve existing water goal
@@ -455,11 +322,7 @@ export default function Dashboard() {
         // Set default stats if health records fail
         setStats(prev => ({
           ...prev,
-          totalRecords: 0,
-          thisWeek: 0,
-          urgentCount: 0,
-          averageSeverity: 0,
-          healthScore: 85
+          totalRecords: 0
         }))
       }
     } catch (error) {
@@ -467,11 +330,7 @@ export default function Dashboard() {
       // Set default stats on error
       setStats(prev => ({
         ...prev,
-        totalRecords: 0,
-        thisWeek: 0,
-        urgentCount: 0,
-        averageSeverity: 0,
-        healthScore: 85
+        totalRecords: 0
       }))
     } finally {
       setLoading(false)
@@ -510,16 +369,10 @@ export default function Dashboard() {
     return () => window.removeEventListener('focus', handleFocus)
   }, [user, authLoading])
 
-  // Monitor stats changes
-  useEffect(() => {
-    console.log('📈 Stats updated:', stats)
-  }, [stats])
-
   // Update active medications count when medications change
   useEffect(() => {
     if (medications.length > 0) {
       const activeCount = medications.filter((m: any) => m.isActive).length
-      console.log('💊 Medications state changed, active count:', activeCount)
       
       setStats(prev => ({
         ...prev,
@@ -530,8 +383,6 @@ export default function Dashboard() {
 
   // Update total records count when records change
   useEffect(() => {
-    console.log('📊 Records state changed, total records:', records.length)
-    
     setStats(prev => ({
       ...prev,
       totalRecords: records.length

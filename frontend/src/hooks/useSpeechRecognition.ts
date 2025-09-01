@@ -1,8 +1,61 @@
 'use client'
 
 import { useState, useRef, useCallback } from 'react'
-import { VoiceRecordingState, SpeechRecognitionInstance, ApiResponse } from '@/types'
-import { isSpeechRecognitionSupported, getSpeechRecognition } from '@/utils/api'
+import { ApiResponse } from '@/types'
+
+// Speech Recognition API types
+interface SpeechRecognitionResult {
+  isFinal: boolean
+  [index: number]: {
+    transcript: string
+    confidence: number
+  }
+}
+
+interface SpeechRecognitionEvent {
+  resultIndex: number
+  results: SpeechRecognitionResult[]
+}
+
+interface SpeechRecognitionErrorEvent {
+  error: string
+  message?: string
+}
+
+interface SpeechRecognitionInstance {
+  continuous: boolean
+  interimResults: boolean
+  lang: string
+  maxAlternatives?: number
+  onstart: () => void
+  onresult: (event: SpeechRecognitionEvent) => void
+  onerror: (event: SpeechRecognitionErrorEvent) => void
+  onend: () => void
+  start: () => void
+  stop: () => void
+}
+
+interface VoiceRecordingState {
+  isRecording: boolean
+  transcript: string
+  isSupported: boolean
+  response: string | ApiResponse | null
+  isProcessing: boolean
+  error: string
+  audioBlob: Blob | null
+  audioUrl: string
+}
+
+// Helper functions
+function isSpeechRecognitionSupported(): boolean {
+  return typeof window !== 'undefined' && 
+    ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window)
+}
+
+function getSpeechRecognition(): any {
+  if (typeof window === 'undefined') return null
+  return (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
+}
 
 export function useSpeechRecognition() {
   const [state, setState] = useState<VoiceRecordingState>({

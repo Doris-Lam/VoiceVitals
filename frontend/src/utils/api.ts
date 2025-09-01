@@ -117,23 +117,6 @@ export async function changePassword(currentPassword: string, newPassword: strin
   }
 }
 
-export async function exportUserData(format: 'json' | 'csv' = 'json') {
-  try {
-    const response = await authenticatedFetch(`/api/settings/export?format=${format}`)
-    
-    if (format === 'csv') {
-      const csvData = await response.text()
-      return csvData
-    } else {
-      const data = await response.json()
-      return data.data
-    }
-  } catch (error) {
-    console.error('Error exporting user data:', error)
-    throw error
-  }
-}
-
 export async function deleteUserAccount() {
   try {
     console.log('🗑️ Frontend: Sending delete account request');
@@ -153,33 +136,6 @@ export async function deleteUserAccount() {
   }
 }
 
-export async function resetSettings() {
-  try {
-    const response = await authenticatedFetch('/api/settings/reset', {
-      method: 'POST',
-    })
-    const data = await response.json()
-    return data.data.settings
-  } catch (error) {
-    console.error('Error resetting settings:', error)
-    throw error
-  }
-}
-
-export function formatTimestamp(timestamp: string): string {
-  return new Date(timestamp).toLocaleString()
-}
-
 export function validateTranscript(transcript: string): boolean {
   return transcript.trim().length > 0
-}
-
-export function isSpeechRecognitionSupported(): boolean {
-  return typeof window !== 'undefined' && 
-    ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window)
-}
-
-export function getSpeechRecognition(): any {
-  if (typeof window === 'undefined') return null
-  return (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
 }
