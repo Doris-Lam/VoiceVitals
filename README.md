@@ -608,6 +608,4 @@ GEMINI_API_KEY=your-production-gemini-key
 
 This project is licensed under the MIT License
 
----
-
 **VoiceVitals** - Making healthcare accessible through voice technology. 🎤❤️
