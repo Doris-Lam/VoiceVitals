@@ -85,23 +85,59 @@ frontend/
 │   │   ├── medications/       # Medication management
 │   │   ├── water/             # Water intake tracking
 │   │   ├── settings/          # User preferences
-│   │   └── profile/           # User profile management
+│   │   └── login/             # Authentication
 │   ├── components/            # Reusable UI components
+│   │   ├── VoiceRecorder.tsx  # Voice recording component
+│   │   ├── Navbar.tsx         # Navigation component
+│   │   ├── Hero.tsx           # Landing page hero
+│   │   ├── Features.tsx       # Features showcase
+│   │   ├── Footer.tsx         # Footer component
+│   │   └── ClientOnly.tsx     # Client-side rendering wrapper
 │   ├── contexts/              # React Context providers
+│   │   ├── AuthContext.tsx    # Authentication context
+│   │   └── ThemeContext.tsx   # Theme management
 │   ├── hooks/                 # Custom React hooks
+│   │   └── useSpeechRecognition.ts # Speech recognition hook
 │   ├── types/                 # TypeScript type definitions
+│   │   └── index.ts           # Shared type definitions
 │   └── utils/                 # Utility functions
+│       ├── api.ts             # API client functions
+│       └── helpers.ts         # Helper utilities
 ```
 
 ### Backend Architecture
 ```
 backend/
 ├── controllers/               # Request handlers
+│   ├── authController.js      # Authentication logic
+│   ├── healthController.js    # Health records management
+│   ├── vitalsController.js    # Vital signs handling
+│   ├── medicationController.js # Medication management
+│   ├── waterController.js     # Water tracking
+│   ├── settingsController.js  # User settings
+│   └── achievementController.js # Achievement system
 ├── models/                   # MongoDB schemas
+│   ├── User.js               # User model
+│   ├── HealthRecord.js       # Health records model
+│   ├── Vitals.js             # Vital signs model
+│   ├── Medication.js         # Medication model
+│   ├── WaterRecord.js        # Water tracking model
+│   └── UserSettings.js       # User settings model
 ├── routes/                   # API route definitions
+│   ├── authRoutes.js         # Authentication routes
+│   ├── healthRoutes.js       # Health records routes
+│   ├── vitalsRoutes.js       # Vital signs routes
+│   ├── medicationRoutes.js   # Medication routes
+│   ├── waterRoutes.js        # Water tracking routes
+│   └── settingsRoutes.js     # Settings routes
 ├── services/                 # Business logic
+│   └── geminiService.js      # AI analysis service
 ├── utils/                    # Helper functions
-└── middleware/               # Custom middleware
+│   ├── auth.js               # Authentication utilities
+│   ├── catchAsync.js         # Error handling
+│   ├── AppError.js           # Custom error class
+│   └── waterScheduler.js     # Water reminder scheduling
+└── server.js                 # Main server file
 ```
 
 ## 🚀 Installation
@@ -265,20 +301,37 @@ Remove medication from tracking
 
 ### Water Tracking Endpoints
 
-#### POST /api/water
+#### POST /api/water/add
 Record water intake
 ```json
 {
   "glasses": 2,
-  "dailyGoal": 8
+  "notes": "After lunch"
 }
 ```
+
+#### GET /api/water/today
+Get today's water intake
 
 #### GET /api/water/history
 Retrieve water intake history
 
-#### GET /api/water/stats
-Get water intake statistics
+#### PUT /api/water/goal
+Update daily water goal
+
+### Settings Endpoints
+
+#### GET /api/settings
+Retrieve user settings
+
+#### PUT /api/settings
+Update user settings
+
+#### POST /api/settings/change-password
+Change user password
+
+#### DELETE /api/settings/delete-account
+Delete user account
 
 ## 🗄️ Database Schema
 
@@ -289,10 +342,19 @@ Get water intake statistics
   name: String,
   email: String (unique),
   password: String (hashed),
-  settings: {
+  healthProfile: {
+    dateOfBirth: Date,
+    gender: String,
+    emergencyContact: {
+      name: String,
+      phone: String,
+      relationship: String
+    }
+  },
+  preferences: {
     theme: String,
     notifications: Boolean,
-    privacyLevel: String
+    language: String
   },
   createdAt: Date,
   updatedAt: Date
@@ -324,8 +386,7 @@ Get water intake statistics
     confidence: Number,
     processedAt: Date
   },
-  createdAt: Date,
-  updatedAt: Date
+  createdAt: Date
 }
 ```
 
@@ -375,6 +436,8 @@ Get water intake statistics
   instructions: String,
   prescribedBy: String,
   isActive: Boolean,
+  refillReminder: Boolean,
+  refillDate: Date,
   createdAt: Date,
   updatedAt: Date
 }
@@ -388,9 +451,26 @@ Get water intake statistics
   date: Date,
   glasses: Number,
   dailyGoal: Number,
-  percentageComplete: Number,
-  isCompleted: Boolean,
+  notes: String,
   createdAt: Date
+}
+```
+
+### UserSettings Model
+```javascript
+{
+  _id: ObjectId,
+  user: ObjectId (ref: User),
+  theme: String,
+  notifications: Boolean,
+  language: String,
+  waterGoal: Number,
+  privacySettings: {
+    shareData: Boolean,
+    allowNotifications: Boolean
+  },
+  createdAt: Date,
+  updatedAt: Date
 }
 ```
 
