@@ -608,13 +608,6 @@ GEMINI_API_KEY=your-production-gemini-key
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 📞 Support
-
-- **Documentation**: [docs.voicevitals.com](https://docs.voicevitals.com)
-- **Issues**: [GitHub Issues](https://github.com/voicevitals/issues)
-- **Email**: support@voicevitals.com
-- **Discord**: [VoiceVitals Community](https://discord.gg/voicevitals)
-
 ---
 
 **VoiceVitals** - Making healthcare accessible through voice technology. 🎤❤️
