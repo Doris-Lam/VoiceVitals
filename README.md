@@ -1,24 +1,5 @@
 # VoiceVitals - Voice-Powered Health Tracking Platform
 
-## 📋 Table of Contents
-- [Overview](#overview)
-- [Features](#features)
-- [Technology Stack](#technology-stack)
-- [Architecture](#architecture)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [API Documentation](#api-documentation)
-- [Database Schema](#database-schema)
-- [Frontend Components](#frontend-components)
-- [Backend Services](#backend-services)
-- [AI Integration](#ai-integration)
-- [Security Features](#security-features)
-- [Accessibility Features](#accessibility-features)
-- [Testing](#testing)
-- [Deployment](#deployment)
-- [Contributing](#contributing)
-- [License](#license)
-
 ## 🎯 Overview
 
 VoiceVitals is a revolutionary healthcare application that leverages voice recognition and artificial intelligence to make health tracking accessible to everyone. The platform allows users to record their symptoms, medications, and health concerns through natural speech, which is then analyzed by AI to provide personalized health insights and recommendations.
