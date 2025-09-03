@@ -1,6 +1,6 @@
 import { ApiResponse } from '@/types'
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || (process.env.NODE_ENV === 'production' ? 'https://your-backend-url.railway.app' : 'http://localhost:4000')
 
 // Helper function to get auth token
 function getAuthToken(): string | null {
