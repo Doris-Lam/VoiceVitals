@@ -1,0 +1,11 @@
+# Ignore frontend files
+../frontend/
+../node_modules/
+../package.json
+../package-lock.json
+
+# Ignore root level files
+../README.md
+../DEPLOYMENT.md
+../.git/
+../.gitignore

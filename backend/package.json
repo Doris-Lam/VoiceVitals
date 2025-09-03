@@ -1,12 +1,12 @@
 {
-  "name": "backend",
+  "name": "voicevitals-backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "VoiceVitals Backend API Server",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node server.js",
-    "build": "echo \"Backend build complete - no compilation needed\"",
+    "dev": "nodemon server.js",
+    "build": "echo 'Backend build complete - no compilation needed'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -28,5 +28,9 @@
     "multer": "^2.0.2",
     "pdf-lib": "^1.17.1",
     "validator": "^13.15.15"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
   }
 }
