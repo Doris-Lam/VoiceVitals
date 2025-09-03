@@ -1,0 +1,9 @@
+# Ignore frontend files - Railway should only deploy backend
+frontend/
+node_modules/
+package-lock.json
+
+# Keep only backend files
+!backend/
+!railway.json
+!Procfile
