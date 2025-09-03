@@ -10,4 +10,3 @@ DEPLOYMENT.md
 
 # Keep only frontend files
 !frontend/
-!vercel.json
