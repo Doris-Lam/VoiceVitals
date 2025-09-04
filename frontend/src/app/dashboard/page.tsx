@@ -111,7 +111,7 @@ export default function Dashboard() {
       const token = localStorage.getItem('token')
       if (!token) return
 
-      const response = await fetch('http://localhost:4000/api/medications', {
+      const response = await fetch('https://web-production-508d.up.railway.app/api/medications', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -145,7 +145,7 @@ export default function Dashboard() {
       const token = localStorage.getItem('token')
       if (!token) return
 
-      const response = await fetch('http://localhost:4000/api/vitals', {
+      const response = await fetch('https://web-production-508d.up.railway.app/api/vitals', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -173,7 +173,7 @@ export default function Dashboard() {
         return
       }
 
-      const response = await fetch('http://localhost:4000/api/water/today', {
+      const response = await fetch('https://web-production-508d.up.railway.app/api/water/today', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -209,7 +209,7 @@ export default function Dashboard() {
         return
       }
 
-      const response = await fetch('http://localhost:4000/api/water/add', {
+      const response = await fetch('https://web-production-508d.up.railway.app/api/water/add', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -249,7 +249,7 @@ export default function Dashboard() {
         return
       }
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'}/api/health`, {
+      const response = await fetch(`https://web-production-508d.up.railway.app/api/health`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'

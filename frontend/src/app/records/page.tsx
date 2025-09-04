@@ -116,7 +116,7 @@ export default function RecordsPage() {
     try {
       setLoading(true)
       // Request all records by setting a very high limit
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'}/api/health?limit=1000`, {
+      const response = await fetch(`https://web-production-508d.up.railway.app/api/health?limit=1000`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
           'Content-Type': 'application/json'
@@ -143,7 +143,7 @@ export default function RecordsPage() {
     if (!confirm('Are you sure you want to delete this record?')) return
     
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'}/api/health/${recordId}`, {
+      const response = await fetch(`https://web-production-508d.up.railway.app/api/health/${recordId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,

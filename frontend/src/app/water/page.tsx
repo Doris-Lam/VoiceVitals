@@ -35,7 +35,7 @@ export default function WaterPage() {
       const token = localStorage.getItem('token')
       if (!token) return
 
-      const response = await fetch('http://localhost:4000/api/water/today', {
+      const response = await fetch('https://web-production-508d.up.railway.app/api/water/today', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -61,7 +61,7 @@ export default function WaterPage() {
       if (!token) return
 
       const days = selectedPeriod === 'week' ? 7 : 30
-      const response = await fetch(`http://localhost:4000/api/water/history?days=${days}`, {
+      const response = await fetch(`https://web-production-508d.up.railway.app/api/water/history?days=${days}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -88,7 +88,7 @@ export default function WaterPage() {
       if (!token) return
 
       const period = selectedPeriod === 'week' ? 'week' : 'month'
-      const response = await fetch(`http://localhost:4000/api/water/stats?period=${period}`, {
+      const response = await fetch(`https://web-production-508d.up.railway.app/api/water/stats?period=${period}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -133,7 +133,7 @@ export default function WaterPage() {
         return
       }
 
-      const response = await fetch('http://localhost:4000/api/water/add', {
+      const response = await fetch('https://web-production-508d.up.railway.app/api/water/add', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -172,7 +172,7 @@ export default function WaterPage() {
       const token = localStorage.getItem('token')
       if (!token) return
 
-      const response = await fetch('http://localhost:4000/api/water/goal', {
+      const response = await fetch('https://web-production-508d.up.railway.app/api/water/goal', {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,

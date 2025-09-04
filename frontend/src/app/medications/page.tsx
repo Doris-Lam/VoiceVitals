@@ -19,7 +19,7 @@ export default function MedicationsPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
   const [showActiveOnly, setShowActiveOnly] = useState(false)
 
-  const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'
+  const API_BASE = 'https://web-production-508d.up.railway.app'
 
   const fetchMedications = useCallback(async () => {
     try {

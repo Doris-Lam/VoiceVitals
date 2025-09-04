@@ -1,9 +1,18 @@
-# Ignore frontend files - Railway should only deploy backend
+# Frontend files
 frontend/
+# Node modules (will be installed fresh)
 node_modules/
-package-lock.json
-
-# Keep only backend files
-!backend/
-!railway.json
-!Procfile
+# Git files
+.git/
+.gitignore
+# Documentation
+README.md
+# Environment files
+.env
+.env.local
+.env.production
+# Logs
+*.log
+# OS files
+.DS_Store
+Thumbs.db

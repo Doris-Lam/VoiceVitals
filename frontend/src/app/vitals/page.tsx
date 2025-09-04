@@ -108,12 +108,12 @@ export default function VitalsPage() {
     try {
       const token = localStorage.getItem('token')
       
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'}/api/vitals`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      })
+          const response = await fetch(`https://web-production-508d.up.railway.app/api/vitals`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    })
 
       if (response.ok) {
         const data = await response.json()
@@ -297,7 +297,7 @@ export default function VitalsPage() {
       }
 
       // Create a new vitals record
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'}/api/vitals`, {
+      const response = await fetch(`https://web-production-508d.up.railway.app/api/vitals`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -341,7 +341,7 @@ export default function VitalsPage() {
     
     try {
       const token = localStorage.getItem('token')
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'}/api/vitals/${recordId}`, {
+      const response = await fetch(`https://web-production-508d.up.railway.app/api/vitals/${recordId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -369,7 +369,7 @@ export default function VitalsPage() {
         return
       }
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'}/api/vitals/${recordId}/regenerate-analysis`, {
+      const response = await fetch(`https://web-production-508d.up.railway.app/api/vitals/${recordId}/regenerate-analysis`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,

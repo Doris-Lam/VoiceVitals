@@ -88,7 +88,7 @@ export default function RecordPage() {
         return
       }
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'}/api/water/add`, {
+      const response = await fetch(`https://web-production-508d.up.railway.app/api/water/add`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -269,7 +269,7 @@ export default function RecordPage() {
         throw new Error('Authentication token not found. Please log in again.')
       }
 
-              const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'}/api/health`, {
+              const response = await fetch(`https://web-production-508d.up.railway.app/api/health`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
