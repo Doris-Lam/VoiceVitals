@@ -28,7 +28,6 @@ GEMINI_API_KEY=your_gemini_key_if_you_have_one
 - Railway will give you: `https://your-app.up.railway.app`
 - Copy this URL!
 
-
 ### 5. **Update Frontend** (1 min)
 - Go to [Vercel Dashboard](https://vercel.com/doris-lams-projects/voice-vitals/settings)
 - Click "Environment Variables"
