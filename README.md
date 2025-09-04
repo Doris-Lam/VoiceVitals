@@ -4,6 +4,8 @@
 
 VoiceVitals is a revolutionary healthcare application that leverages voice recognition and artificial intelligence to make health tracking accessible to everyone. The platform allows users to record their symptoms, medications, and health concerns through natural speech, which is then analyzed by AI to provide personalized health insights and recommendations.
 
+**🚀 Live Demo:** [https://voice-vitals.vercel.app](https://voice-vitals.vercel.app)
+
 ### Key Benefits
 - **Accessibility First**: Designed for seniors, people with disabilities, and anyone preferring hands-free interaction
 - **Natural Communication**: Speak naturally about symptoms without complex forms
@@ -48,13 +50,14 @@ VoiceVitals is a revolutionary healthcare application that leverages voice recog
 ## 🛠 Technology Stack
 
 ### Frontend
-- **Framework**: Next.js 14 with App Router
+- **Framework**: Next.js 15 with App Router
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS with custom design system
 - **Animations**: Framer Motion for smooth transitions
 - **State Management**: React Context API
 - **Icons**: Lucide React
 - **Charts**: Custom chart components with D3.js
+- **Deployment**: Vercel with automatic deployments
 
 ### Backend
 - **Runtime**: Node.js
@@ -64,6 +67,7 @@ VoiceVitals is a revolutionary healthcare application that leverages voice recog
 - **AI Integration**: Google Gemini API
 - **File Processing**: Multer for audio file handling
 - **Validation**: Joi for request validation
+- **Deployment**: Railway with automatic scaling
 
 ### AI & External Services
 - **Speech Recognition**: Web Speech API
@@ -85,7 +89,8 @@ frontend/
 │   │   ├── medications/       # Medication management
 │   │   ├── water/             # Water intake tracking
 │   │   ├── settings/          # User preferences
-│   │   └── login/             # Authentication
+│   │   ├── login/             # Authentication
+│   │   └── ai-analysis/       # AI analysis results
 │   ├── components/            # Reusable UI components
 │   │   ├── VoiceRecorder.tsx  # Voice recording component
 │   │   ├── Navbar.tsx         # Navigation component
@@ -146,6 +151,9 @@ backend/
 - Node.js 18+ 
 - MongoDB 6.0+
 - npm or yarn package manager
+
+### Live Demo
+**🌐 Production App:** [https://voice-vitals.vercel.app](https://voice-vitals.vercel.app)
 
 ### Available Scripts (Root Directory)
 ```bash
@@ -636,12 +644,6 @@ Delete user account
 
 ## 🚀 Deployment
 
-### Production Environment
-- **Frontend**: Vercel or Netlify
-- **Backend**: AWS EC2 or Google Cloud Run
-- **Database**: MongoDB Atlas
-- **CDN**: Cloudflare for static assets
-
 ### Environment Setup
 ```bash
 # Production build (from root directory)
@@ -649,40 +651,6 @@ npm run build
 
 # Start production servers
 npm start
-
-# Environment variables
-NODE_ENV=production
-MONGODB_URI=your-production-mongodb-uri
-JWT_SECRET=your-production-jwt-secret
-GEMINI_API_KEY=your-production-gemini-key
-```
-
-### Monitoring & Logging
-- **Application Monitoring**: Sentry for error tracking
-- **Performance Monitoring**: New Relic or DataDog
-- **Log Management**: Winston with structured logging
-- **Health Checks**: Automated system monitoring
-
-## 🤝 Contributing
-
-### Development Setup
-1. Fork the repository
-2. Create a feature branch
-3. Install dependencies
-4. Run tests
-5. Submit a pull request
-
-### Code Standards
-- **TypeScript**: Strict type checking
-- **ESLint**: Code quality enforcement
-- **Prettier**: Consistent formatting
-- **Conventional Commits**: Standardized commit messages
-
-### Testing Requirements
-- **Coverage**: Minimum 80% test coverage
-- **Accessibility**: All components must pass axe-core tests
-- **Performance**: Lighthouse score > 90
-- **Security**: No critical vulnerabilities
 
 ## 📄 License
 
