@@ -77,7 +77,10 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/voicevita
 
 // Middleware
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  origin: [
+    process.env.FRONTEND_URL || 'http://localhost:3000',
+    'https://voice-vitals-5syx4szr6-doris-lams-projects.vercel.app'
+  ],
   credentials: true
 }));
 app.use(express.json({ limit: '10mb' }));
